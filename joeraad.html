@@ -1,0 +1,490 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expression Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Expression Calculator</h1>
+        <nav>
+            <button id="dark-mode-toggle">Toggle Dark Mode</button>
+        </nav>
+    </header>
+
+    <main>
+        <div class="calculator">
+            <!-- Display -->
+            <div class="display">
+                <input id="expression-input" type="text" placeholder="Enter Prefix/Postfix Expression" />
+                <div id="result-display">Result: <span id="result-value"> </span></div>
+            </div>                      
+
+            <!-- Buttons -->
+            <div class="button-grid">
+                <!-- Digit Buttons -->
+                <button class="digit">1</button>
+                <button class="digit">2</button>
+                <button class="digit">3</button>
+                <button class="digit">4</button>
+                <button class="digit">5</button>
+                <button class="digit">6</button>
+                <button class="digit">7</button>
+                <button class="digit">8</button>
+                <button class="digit">9</button>
+                <button class="digit">0</button>
+                <button class="digit">.</button>
+                <button class="digit"> </button>
+                <!-- Operators -->
+                
+                <button class="operator">+</button>
+                <button class="operator">-</button>
+                <button class="operator">*</button>
+                <button class="operator">/</button>
+
+                <!-- Actions -->
+
+                <button id="evaluate">Evaluate</button>
+                <button id="clear">Clear</button>
+                <button id="delete">Delete</button>
+                <button id="share">Share</button>
+            </div>
+        </div>
+
+        <section class="educational-section">
+            <h2>Prefix and Postfix Notations Guide</h2>
+            <p>Prefix notation (Polish notation) places operators before operands, e.g., <code>+ 1 2</code> evaluates to <code>3</code>.</p>
+            <p>Postfix notation (Reverse Polish notation) places operators after operands, e.g., <code>1 2 +</code> evaluates to <code>3</code>.</p>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+<style>
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+header {
+    width: 100%;
+    background-color: #6200ea;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}
+
+header nav {
+    margin-top: 0.5rem;
+}
+
+header button {
+    background-color: white;
+    color: #6200ea;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+header button:hover {
+    background-color: #d1c4e9;
+}
+
+main {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+}
+
+.calculator {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    padding: 1.5rem;
+    width: 100%;
+}
+
+.display {
+    margin-bottom: 1rem;
+}
+
+#expression-input {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 0.5rem;
+}
+
+#result-display {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #6200ea;
+}
+
+.button-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+}
+
+button {
+    padding: 1rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+button.digit {
+    background-color: #e0e0e0;
+}
+
+button.operator {
+    background-color: #6200ea;
+    color: white;
+}
+
+button#evaluate {
+    grid-column: span 2;
+    background-color: #388e3c;
+    color: white;
+}
+
+button#clear {
+    grid-column: span 2;
+    background-color: #d32f2f;
+    color: white;
+}
+
+button#delete {
+    grid-column: span 2;
+    background-color: #ffa000;
+    color: white;
+}
+
+button#share {
+    grid-column: span 2;
+    background-color: purple;
+    color: white;
+}
+
+button:hover {
+    background-color: #bdbdbd;
+    transform: translateY(-2px);
+}
+
+button.operator:hover {
+    background-color: #9575cd;
+}
+
+button#evaluate:hover {
+    background-color: #66bb6a;
+}
+
+button#clear:hover {
+    background-color: #e57373;
+}
+
+button#delete:hover {
+    background-color: #ffb74d;
+}
+
+button#share:hover {
+    background-color: #66bb99;
+}
+
+/* Educational Section */
+.educational-section {
+    margin-top: 2rem;
+    background: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    width: 100%;
+}
+
+.educational-section h2 {
+    color: #6200ea;
+}
+
+.educational-section p {
+    line-height: 1.5;
+}
+
+/* Dark Mode */
+body.dark {
+    background-color: #212121;
+    color: #f5f5f5;
+}
+
+body.dark header {
+    background-color: #333;
+}
+
+body.dark .calculator, body.dark .educational-section {
+    background-color: #424242;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
+}
+
+body.dark button {
+    background-color: #616161;
+    color: white;
+}
+
+body.dark button:hover {
+    background-color: #757575;
+}
+
+body.dark button.operator:hover {
+    background-color: #9575cd;
+}
+
+body.dark button#evaluate:hover {
+    background-color: #81c784;
+}
+
+body.dark button#clear:hover {
+    background-color: #ef9a9a;
+}
+
+body.dark button#delete:hover {
+    background-color: #ffd54f;
+}
+
+body.dark button#share:hover {
+    background-color: #ffd54f;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .button-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.4rem;
+    }
+
+    button {
+        font-size: 0.9rem;
+        padding: 0.8rem;
+    }
+
+    #expression-input {
+        font-size: 0.9rem;
+        padding: 0.4rem;
+    }
+
+    #result-display {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .button-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    button {
+        font-size: 0.8rem;
+        padding: 0.6rem;
+    }
+
+    header {
+        font-size: 1rem;
+        padding: 0.5rem;
+    }
+
+    .calculator {
+        padding: 1rem;
+    }
+
+    .educational-section {
+        padding: 1rem;
+    }
+}
+</style>
+/* ////////////////////////////////////////// *////////////////////////////////////////////////////////////
+<script>
+
+// Select DOM elements
+const expressionInput = document.getElementById('expression-input');
+const resultDisplay = document.getElementById('result-value');
+const evaluateButton = document.getElementById('evaluate');
+const clearButton = document.getElementById('clear');
+const digitButtons = document.querySelectorAll('.digit');
+const operatorButtons = document.querySelectorAll('.operator');
+const darkModeToggle = document.getElementById('dark-mode-toggle');
+
+
+// Add digit or operator to the input field
+function appendToExpression(value) {
+    expressionInput.value += value;
+}
+
+// Evaluate prefix or postfix expression
+function evaluateExpression() {
+    const expression = expressionInput.value.trim();
+
+    try {
+        // Choose evaluation logic based on first character
+        if (isNaN(expression[0]) && expression.split(' ').length > 1) {
+            resultDisplay.textContent = evaluatePrefix(expression);
+        } else {
+            resultDisplay.textContent = evaluatePostfix(expression);
+        }
+    } catch (error) {
+        resultDisplay.textContent = 'Error: Invalid Expression';
+    }
+}
+
+// Evaluate a prefix expression
+function evaluatePrefix(expression) {
+    const tokens = expression.split(' ').reverse();
+    const stack = [];
+
+    for (const token of tokens) {
+        if (isOperator(token)) {
+            const operand1 = stack.pop();
+            const operand2 = stack.pop();
+            stack.push(operate(token, operand1, operand2));
+        } else {
+            stack.push(parseFloat(token));
+        }
+    }
+    return stack.pop();
+}
+
+// Evaluate a postfix expression
+function evaluatePostfix(expression) {
+    const tokens = expression.split(' ');
+    const stack = [];
+
+    for (const token of tokens) {
+        if (isOperator(token)) {
+            const operand2 = stack.pop();
+            const operand1 = stack.pop();
+            stack.push(operate(token, operand1, operand2));
+        } else {
+            stack.push(parseFloat(token));
+        }
+    }
+    return stack.pop();
+}
+
+// Check if a token is an operator
+function isOperator(token) {
+    return ['+', '-', '*', '/'].includes(token);
+}
+
+// Perform basic arithmetic operations
+function operate(operator, operand1, operand2) {
+    switch (operator) {
+        case '+': return operand1 + operand2;
+        case '-': return operand1 - operand2;
+        case '*': return operand1 * operand2;
+        case '/': return operand1 / operand2;
+        default: throw new Error('Unknown operator');
+    }
+}
+
+////////////// ////////////////////////
+
+const deleteButton = document.getElementById('delete'); 
+// Calculator functionality
+
+// Select necessary elements
+
+deleteButton.id = "delete";
+deleteButton.textContent = "Delete";
+document.querySelector(".button-grid").appendChild(deleteButton);
+
+
+
+function deleteLastCharacter() {
+    expressionInput.value = expressionInput.value.slice(0, -1);
+}
+
+deleteButton.addEventListener("click", deleteLastCharacter);
+
+///////////////////////////////////////////////////
+
+
+// Clear input and result display
+function clearCalculator() {
+    expressionInput.value = '';
+    resultDisplay.textContent = '0';
+}
+
+// Toggle dark mode
+function toggleDarkMode() {
+    document.body.classList.toggle('dark');
+}
+
+// Add event listeners
+evaluateButton.addEventListener('click', evaluateExpression);
+clearButton.addEventListener('click', clearCalculator);
+darkModeToggle.addEventListener('click', toggleDarkMode);
+
+digitButtons.forEach(button => {
+    button.addEventListener('click', () => appendToExpression(button.textContent));
+});
+
+operatorButtons.forEach(button => {
+    button.addEventListener('click', () => appendToExpression(` ${button.textContent} `));
+});
+
+
+//////////////////////////////////////////////////////////////////////
+
+// Calculator functionality
+
+// Select necessary elements
+
+
+
+/*
+deleteButton.id = "delete";
+deleteButton.textContent = "Del";
+document.querySelector(".button-grid").appendChild(deleteButton);
+
+
+
+function deleteLastCharacter() {
+    expressionInput.value = expressionInput.value.slice(0, -1);
+}
+
+deleteButton.addEventListener("click", deleteLastCharacter);
+*/
+
+
+
+
+/// May delete if everything is correct
+// Event listeners
+//clearButton.addEventListener("click", clearInputs);
+
+/*evaluateButton.addEventListener("click", () => {
+    const expression = expressionInput.value;
+    const result = evaluateExpression(expression);
+    resultDisplay.textContent = result;
+}); */
+
+</script>
